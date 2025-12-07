@@ -49,7 +49,7 @@
       animation:sweep 6s infinite linear;
     }
 
-    /* TOP ROW */
+    /* TOP CARD ROW */
     .row-top{
       display:flex;
       justify-content:space-between;
@@ -64,7 +64,7 @@
       font-weight:300;
     }
 
-    /* MONTANT avec grattage en overlay */
+    /* MONTANT doré */
     .amount-wrapper{
       position:relative;
     }
@@ -74,25 +74,22 @@
       font-weight:700;
       z-index:3;
       position:relative;
-      text-shadow:0 0 18px rgba(255,255,255,0.35);
+      padding:8px 18px;
+      border-radius:12px;
+
+      /* Fond doré */
+      background:linear-gradient(135deg,#ffd678,#e8b144,#ffcf5e);
+      color:#000;
+      text-shadow:0 2px 6px rgba(0,0,0,0.25);
     }
 
     /* couche grattable */
-    .scratch-layer{
-      position:absolute;
-      top:0;left:0;
-      width:100%;height:100%;
-      background:linear-gradient(135deg,#bdbdbd,#8b8b8b);
-      border-radius:8px;
-      z-index:5;
-    }
-
     canvas{
       position:absolute;
       top:0;left:0;
       width:100%;height:100%;
       z-index:6;
-      border-radius:8px;
+      border-radius:12px;
     }
 
     /* Numéro de carte */
@@ -104,7 +101,7 @@
       z-index:10;
     }
 
-    /* BAS DE CARTE */
+    /* BAS DE LA CARTE */
     .bottom{
       display:flex;
       justify-content:space-between;
@@ -170,11 +167,8 @@
     <div class="row-top">
       <div class="brand">ZARA</div>
 
-      <!-- Zone grattable -->
       <div class="amount-wrapper" id="scratchZone">
         <div class="amount-real">100€</div>
-
-        <div class="scratch-layer"></div>
         <canvas id="scratchCanvas"></canvas>
       </div>
     </div>
@@ -209,7 +203,7 @@ const ctx = canvas.getContext("2d");
 function resizeCanvas() {
   canvas.width = zone.offsetWidth;
   canvas.height = zone.offsetHeight;
-  ctx.fillStyle = "#bdbdbd";
+  ctx.fillStyle = "#9e9e9e"; /* gris métal */
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 resizeCanvas();
@@ -233,14 +227,14 @@ function scratch(e) {
 
   ctx.globalCompositeOperation = "destination-out";
   ctx.beginPath();
-  ctx.arc(x, y, 25, 0, Math.PI * 2);
+  ctx.arc(x, y, 28, 0, Math.PI * 2);
   ctx.fill();
 }
 
 canvas.addEventListener("mousemove", scratch);
 canvas.addEventListener("touchmove", scratch);
 
-/* Auto-révélation quand 60% gratté */
+/* Auto-révélation quand >60% gratté */
 function checkReveal() {
   let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
   let cleared = 0;
