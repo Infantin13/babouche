@@ -18,106 +18,227 @@
       justify-content: center;
       align-items: center;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      overflow: hidden; /* empêche le scroll */
+      overflow: hidden;
     }
 
-    /* ---- CARTE PLEIN ÉCRAN ---- */
-    .card {
-      width: 100vw;
-      height: 100vh;
-      padding: 40px;
+    .wrapper {
+      position: relative;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      gap: 18px;
+    }
+
+    /* --- CARTE BANCAIRE --- */
+    .card {
+      position: relative;
+      width: min(360px, 90vw);
+      aspect-ratio: 1.6; /* format carte bancaire */
+      border-radius: 18px;
+      padding: 20px 22px;
       color: #fff;
-      background: #000;
-      text-align: center;
+      background: radial-gradient(circle at top left, #333 0, #050505 45%, #000 100%);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+      overflow: hidden;
+
+      animation: float 4.2s ease-in-out infinite;
     }
 
-    h1 {
-      font-size: 2.4rem;
-      margin-bottom: 1rem;
-      letter-spacing: 0.05em;
+    /* halo lumineux */
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 60%);
+      top: -140px;
+      right: -120px;
+      opacity: 0.7;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation: shine 5s linear infinite;
     }
 
-    .subtitle {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
+    /* ligne brillante horizontale */
+    .card::after {
+      content: "";
+      position: absolute;
+      left: -40%;
+      top: 40%;
+      width: 180%;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,0.45),
+        transparent
+      );
+      opacity: 0.6;
+      transform: translateX(-50%);
+      animation: sweep 6s linear infinite;
+    }
+
+    .row-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      font-size: 1.6rem;
+      letter-spacing: 0.38em;
+      text-transform: uppercase;
+    }
+
+    .brand span {
+      display: inline-block;
+      transform: translateX(0.38em); /* compense le letter-spacing au début */
+    }
+
+    .amount-chip {
+      text-align: right;
+      font-size: 0.9rem;
+    }
+
+    .amount-chip .label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.65rem;
+      opacity: 0.7;
+    }
+
+    .amount-chip .value {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .number {
+      margin: 10px 0 14px;
+      font-size: 1rem;
+      letter-spacing: 0.24em;
+      position: relative;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+    .bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 0.75rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .field-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.65;
+      font-size: 0.65rem;
+      margin-bottom: 3px;
+    }
+
+    .field-value {
+      font-size: 0.9rem;
+    }
+
+    .logo-zara-small {
+      font-size: 0.95rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
       opacity: 0.9;
     }
 
-    .amount {
-      font-size: 2.6rem;
-      font-weight: 700;
-      margin-bottom: 2.2rem;
-    }
-
-    .label {
-      font-size: 0.9rem;
-      margin-bottom: 6px;
-      opacity: 0.7;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-
-    .value {
-      font-size: 1.4rem;
-      margin-bottom: 2rem;
-      letter-spacing: 0.12em;
-      font-weight: 500;
-    }
-
-    .fineprint {
-      font-size: 0.9rem;
-      opacity: 0.6;
-      margin-top: auto;
+    /* Texte en dessous */
+    .legend {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #000;
+      max-width: 320px;
     }
 
     .back-btn {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 24px;
-      background: #fff;
-      color: #000;
+      margin-top: 6px;
+      padding: 10px 22px;
       border-radius: 999px;
+      border: none;
+      background: #000;
+      color: #fff;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      font-size: 0.9rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    }
+
+    /* --- ANIMATIONS --- */
+
+    @keyframes float {
+      0%   { transform: translateY(0) rotate(-1deg); }
+      50%  { transform: translateY(-10px) rotate(1.2deg); }
+      100% { transform: translateY(0) rotate(-1deg); }
+    }
+
+    @keyframes shine {
+      0%   { transform: translate(0,0); opacity: 0.7; }
+      50%  { transform: translate(-10px, 6px); opacity: 0.4; }
+      100% { transform: translate(0,0); opacity: 0.7; }
+    }
+
+    @keyframes sweep {
+      0%   { transform: translateX(-80%); opacity: 0; }
+      30%  { opacity: 0.7; }
+      70%  { opacity: 0.7; }
+      100% { transform: translateX(80%); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>🎁 Carte Cadeau Zara</h1>
-    <p class="subtitle">Joyeux Noël ✨</p>
+  <div class="wrapper">
+    <div class="card">
+      <div class="row-top">
+        <!-- Logo Zara en texte -->
+        <div class="brand"><span>ZARA</span></div>
 
-    <div class="amount">100,00 €</div>
+        <div class="amount-chip">
+          <div class="label">Montant</div>
+          <div class="value">100,00 €</div>
+        </div>
+      </div>
 
-    <div>
-      <div class="label">Numéro de carte</div>
-      <div class="value">9110 2501 4244 1364</div>
+      <!-- Numéro de carte -->
+      <div class="number">
+        XXXX XXXX XXXX XXXX
+      </div>
+
+      <!-- Infos bas carte -->
+      <div class="bottom-row">
+        <div>
+          <div class="field-label">CVV</div>
+          <div class="field-value">YYY</div>
+        </div>
+
+        <div>
+          <div class="field-label">Expiration</div>
+          <div class="field-value">MM/AAAA</div>
+        </div>
+
+        <div class="logo-zara-small">
+          Z&nbsp;A&nbsp;R&nbsp;A
+        </div>
+      </div>
     </div>
 
-    <div>
-      <div class="label">CVV</div>
-      <div class="value">804</div>
-    </div>
-
-    <div>
-      <div class="label">Expiration</div>
-      <div class="value">03/12/2028</div>
-    </div>
-
-    <p class="fineprint">
-      Carte valable en magasin et en ligne chez Zara. Conserve ces informations pour utiliser la carte lors de ton achat.
+    <p class="legend">
+      Carte cadeau à utiliser chez <strong>Zara</strong>, en magasin ou en ligne.
+      Garde bien ces informations, elles te serviront au moment du paiement.
     </p>
-  </div>
 
-  <a class="back-btn" href="index.html">⬅ Retourner au chat</a>
+    <a class="back-btn" href="index.html">⬅ Revoir le chat</a>
+  </div>
 
 </body>
 </html>
