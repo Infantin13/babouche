@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chat & Cadeau</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ff2b8a; /* rose proche de ton gif */
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .scene {
+      position: relative;
+      max-width: 400px;
+      width: 90vw;
+    }
+
+    .scene img {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .cta {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translateX(-50%);
+      padding: 12px 20px;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      border-radius: 999px;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .cta.show {
+      opacity: 1;
+      pointer-events: auto;
+      animation: pulse 1.4s infinite;
+    }
+
+    @keyframes pulse {
+      0%   { transform: translateX(-50%) scale(1); }
+      50%  { transform: translateX(-50%) scale(1.06); }
+      100% { transform: translateX(-50%) scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <!-- Mets ici TON gif -->
+    <img src="chat.gif" alt="Chat qui essaie d'ouvrir un cadeau" />
+
+    <!-- Bouton qui apparaît après 5 secondes -->
+    <button class="cta" id="ctaButton">
+      🐱 Aide moi à ouvrir le cadeau
+    </button>
+  </div>
+
+  <script>
+    // Affiche le bouton après 5 secondes
+    setTimeout(function () {
+      const btn = document.getElementById('ctaButton');
+      if (btn) {
+        btn.classList.add('show');
+      }
+    }, 5000);
+
+    // Quand on clique → on va sur la nouvelle page
+    document.getElementById('ctaButton').addEventListener('click', function () {
+      window.location.href = 'cadeau.html';
+    });
+  </script>
+</body>
+</html>
