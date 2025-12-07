@@ -3,165 +3,180 @@
 <head>
   <meta charset="UTF-8" />
   <title>Carte cadeau Zara 🎁</title>
+
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    *{margin:0;padding:0;box-sizing:border-box;}
+
+    body{
+      width:100vw;height:100vh;
+      background:#ff2b8a;
+      display:flex;justify-content:center;align-items:center;
+      font-family:system-ui,sans-serif;
+      overflow:hidden;
     }
 
-    body {
-      width: 100vw;
-      height: 100vh;
-      background: #000;
-      font-family: system-ui, sans-serif;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    /* CARTE FULLSCREEN */
+    .card{
+      width:100vw;height:100vh;
+      padding:6vh 6vw;
+      background:radial-gradient(circle at top left,#333 0%,#050505 35%,#000 80%);
+      color:#fff;
+      display:flex;flex-direction:column;
+      justify-content:space-between;
+      animation:float 4.2s ease-in-out infinite;
+      position:relative;overflow:hidden;
     }
 
-    /* --- CARTE PLEIN ÉCRAN --- */
-    .card {
-      width: 100vw;
-      height: 100vh;
-      padding: 8vh 6vw;
-      color: #fff;
-      background: radial-gradient(circle at top left, #333 0%, #050505 40%, #000 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-
-      animation: float 4s ease-in-out infinite;
-      position: relative;
-      overflow: hidden;
+    /* Halo */
+    .card::before{
+      content:"";
+      position:absolute;
+      width:70vw;height:70vw;
+      border-radius:50%;
+      background:rgba(255,255,255,0.08);
+      top:-25vw;right:-25vw;
+      filter:blur(10vw);
+      animation:shine 8s infinite linear;
     }
 
-    /* halo lumineux */
-    .card::before {
-      content: "";
-      position: absolute;
-      width: 70vw;
-      height: 70vw;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.10);
-      top: -20vw;
-      right: -20vw;
-      filter: blur(10vw);
-      animation: shine 8s infinite linear;
+    /* Ligne brillante */
+    .card::after{
+      content:"";
+      position:absolute;
+      width:200%;height:2px;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,0.7),transparent);
+      top:50%;left:-60%;
+      animation:sweep 6s infinite linear;
     }
 
-    /* ligne brillante */
-    .card::after {
-      content: "";
-      position: absolute;
-      width: 200%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-      top: 50%;
-      left: -50%;
-      animation: sweep 6s infinite linear;
+    /* TOP ROW */
+    .row-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      z-index:10;
     }
 
-    /* TOP */
-    .row-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .brand{
+      font-size:8vw;
+      letter-spacing:1.2vw;
+      text-transform:uppercase;
+      font-weight:300;
     }
 
-    .brand {
-      font-size: 6vw;
-      letter-spacing: 1.1vw;
-      text-transform: uppercase;
+    /* MONTANT avec grattage en overlay */
+    .amount-wrapper{
+      position:relative;
     }
 
-    .amount {
-      font-size: 7vw;
-      font-weight: 700;
+    .amount-real{
+      font-size:10vw;
+      font-weight:700;
+      z-index:3;
+      position:relative;
+      text-shadow:0 0 18px rgba(255,255,255,0.35);
     }
 
-    /* NUMÉRO */
-    .number {
-      text-align: center;
-      font-size: 5vw;
-      letter-spacing: 1vw;
-      margin: 4vh 0;
-      white-space: nowrap;
+    /* couche grattable */
+    .scratch-layer{
+      position:absolute;
+      top:0;left:0;
+      width:100%;height:100%;
+      background:linear-gradient(135deg,#bdbdbd,#8b8b8b);
+      border-radius:8px;
+      z-index:5;
+    }
+
+    canvas{
+      position:absolute;
+      top:0;left:0;
+      width:100%;height:100%;
+      z-index:6;
+      border-radius:8px;
+    }
+
+    /* Numéro de carte */
+    .number{
+      text-align:center;
+      font-size:5vw;
+      letter-spacing:1vw;
+      margin:4vh 0;
+      z-index:10;
     }
 
     /* BAS DE CARTE */
-    .bottom {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-size: 4vw;
+    .bottom{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      font-size:4.5vw;
+      z-index:10;
     }
 
-    .label {
-      font-size: 3vw;
-      text-transform: uppercase;
-      opacity: 0.6;
-      letter-spacing: 0.4vw;
+    .label{
+      font-size:3vw;text-transform:uppercase;
+      opacity:.6;
+      letter-spacing:.4vw;
     }
 
-    .value {
-      font-size: 4.5vw;
-      margin-top: 1vw;
+    .value{
+      font-size:4.5vw;margin-top:1vw;
     }
 
-    .logo-small {
-      font-size: 4vw;
-      letter-spacing: 0.8vw;
-      opacity: 0.9;
-      text-transform: uppercase;
+    .logo-small{
+      font-size:4vw;
+      opacity:.8;
+      text-transform:uppercase;
+      letter-spacing:.6vw;
     }
 
-    /* bouton retour */
-    .back-btn {
-      position: absolute;
-      bottom: 3vh;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 12px 28px;
-      background: #fff;
-      color: #000;
-      border-radius: 999px;
-      font-size: 4vw;
-      text-decoration: none;
-      font-weight: 600;
-      box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    /* Bouton retour */
+    .back-btn{
+      position:absolute;
+      bottom:3vh;left:50%;transform:translateX(-50%);
+      padding:12px 28px;
+      background:#fff;color:#000;
+      border-radius:999px;text-decoration:none;
+      font-size:4vw;font-weight:600;
+      box-shadow:0 0 20px rgba(255,255,255,0.4);
+      z-index:20;
     }
 
-    /* ANIMATIONS */
-    @keyframes float {
-      0%   { transform: scale(1) translateY(0); }
-      50%  { transform: scale(1.02) translateY(-0.6vh); }
-      100% { transform: scale(1) translateY(0); }
+    /* Animations */
+    @keyframes float{
+      0%{transform:scale(1) translateY(0);}
+      50%{transform:scale(1.02) translateY(-1vh);}
+      100%{transform:scale(1) translateY(0);}
     }
 
-    @keyframes shine {
-      0%   { transform: translate(0,0); opacity: 0.08; }
-      50%  { transform: translate(-4vw,3vw); opacity: 0.15; }
-      100% { transform: translate(0,0); opacity: 0.08; }
+    @keyframes shine{
+      0%{transform:translate(0,0);opacity:0.08;}
+      50%{transform:translate(-4vw,3vw);opacity:0.15;}
+      100%{transform:translate(0,0);opacity:0.08;}
     }
 
-    @keyframes sweep {
-      0%   { transform: translateX(-80%); opacity: 0; }
-      40%  { opacity: 0.7; }
-      100% { transform: translateX(80%); opacity: 0; }
+    @keyframes sweep{
+      0%{transform:translateX(-80%);opacity:0;}
+      40%{opacity:.7;}
+      100%{transform:translateX(80%);opacity:0;}
     }
-
   </style>
-</head>
 
+</head>
 <body>
 
   <div class="card">
 
     <div class="row-top">
       <div class="brand">ZARA</div>
-      <div class="amount">100€</div>
+
+      <!-- Zone grattable -->
+      <div class="amount-wrapper" id="scratchZone">
+        <div class="amount-real">100€</div>
+
+        <div class="scratch-layer"></div>
+        <canvas id="scratchCanvas"></canvas>
+      </div>
     </div>
 
     <div class="number">XXXX XXXX XXXX XXXX</div>
@@ -180,9 +195,68 @@
       <div class="logo-small">ZARA</div>
     </div>
 
+    <a href="index.html" class="back-btn">⬅ Retour</a>
+
   </div>
 
-  <a class="back-btn" href="index.html">⬅ Retour</a>
+
+<script>
+/* --- EFFET GRATTER --- */
+const canvas = document.getElementById("scratchCanvas");
+const zone = document.getElementById("scratchZone");
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = zone.offsetWidth;
+  canvas.height = zone.offsetHeight;
+  ctx.fillStyle = "#bdbdbd";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+let scratching = false;
+
+canvas.addEventListener("mousedown", () => scratching = true);
+canvas.addEventListener("mouseup", () => scratching = false);
+canvas.addEventListener("mouseleave", () => scratching = false);
+
+canvas.addEventListener("touchstart", () => scratching = true);
+canvas.addEventListener("touchend", () => scratching = false);
+
+function scratch(e) {
+  if (!scratching) return;
+
+  let rect = canvas.getBoundingClientRect();
+  let x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+  let y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+
+  ctx.globalCompositeOperation = "destination-out";
+  ctx.beginPath();
+  ctx.arc(x, y, 25, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+canvas.addEventListener("mousemove", scratch);
+canvas.addEventListener("touchmove", scratch);
+
+/* Auto-révélation quand 60% gratté */
+function checkReveal() {
+  let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+  let cleared = 0;
+  for (let i = 3; i < pixels.length; i += 4) {
+    if (pixels[i] === 0) cleared++;
+  }
+  let ratio = cleared / (pixels.length / 4);
+
+  if (ratio > 0.6) {
+    canvas.style.opacity = "0";
+    setTimeout(() => canvas.remove(), 400);
+  }
+  requestAnimationFrame(checkReveal);
+}
+checkReveal();
+</script>
 
 </body>
 </html>
