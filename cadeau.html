@@ -21,6 +21,7 @@ body{
   background:#000;
   animation:fadeOut 1.2s ease forwards;
   z-index:999;
+  pointer-events:none; /* ✅ NE BLOQUE PLUS LES INTERACTIONS */
 }
 
 @keyframes fadeOut {
@@ -224,7 +225,7 @@ body{
     <div class="amount-wrapper" id="scratchZone">
       <div class="amount-real" id="amountReal">100€</div>
 
-      <!-- Étincelles orbitantes -->
+      <!-- Étincelles autour du montant -->
       <div class="sparkle"></div>
       <div class="sparkle"></div>
       <div class="sparkle"></div>
@@ -256,9 +257,8 @@ body{
 <div id="noel-message">🎄 Joyeux Noël 🎁</div>
 
 
-
 <script>
-/* --- EFFET DE GRATTER --- */
+/* --- EFFET GRATTER --- */
 const canvas = document.getElementById("scratchCanvas");
 const zone = document.getElementById("scratchZone");
 const ctx = canvas.getContext("2d");
@@ -316,8 +316,7 @@ function checkReveal() {
 }
 checkReveal();
 
-
-/* Apparition BLING du montant */
+/* Apparition BLING du montant + Joyeux Noël */
 function revealAmount() {
   const amount = document.getElementById("amountReal");
   const noel = document.getElementById("noel-message");
@@ -325,15 +324,15 @@ function revealAmount() {
   canvas.style.opacity = "0";
   setTimeout(() => canvas.remove(), 350);
 
-  // BLING
+  // BLING montant
   amount.style.opacity = "1";
   amount.style.animation = "bling 0.9s ease forwards";
 
-  // Faire tourner les étincelles
+  // Étincelles visibles
   const sparkles = document.querySelectorAll(".sparkle");
   sparkles.forEach(s => s.style.opacity = "1");
 
-  // Apparition du Joyeux Noël
+  // Joyeux Noël après un petit délai
   setTimeout(() => {
     noel.style.opacity = "1";
   }, 1200);
