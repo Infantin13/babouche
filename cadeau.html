@@ -14,16 +14,15 @@ body{
   overflow:hidden;
 }
 
-/* Animation d’arrivée depuis le GIF */
+/* Transition depuis le GIF */
 #loader-fade {
   position:fixed;
   inset:0;
   background:#000;
   animation:fadeOut 1.2s ease forwards;
   z-index:999;
-  pointer-events:none; /* ✅ NE BLOQUE PLUS LES INTERACTIONS */
+  pointer-events:none;
 }
-
 @keyframes fadeOut {
   0% {opacity:1;}
   100% {opacity:0;}
@@ -43,7 +42,7 @@ body{
   overflow:hidden;
 }
 
-/* Halo lumineux */
+/* Halo + ligne brillante */
 .card::before{
   content:"";
   position:absolute;
@@ -54,8 +53,6 @@ body{
   filter:blur(10vw);
   animation:shine 8s infinite linear;
 }
-
-/* Ligne brillante */
 .card::after{
   content:"";
   position:absolute;
@@ -65,7 +62,7 @@ body{
   animation:sweep 6s infinite linear;
 }
 
-/* Logo Zara */
+/* Logo ZARA */
 .brand{
   font-size:8vw;
   letter-spacing:1.2vw;
@@ -76,7 +73,22 @@ body{
   z-index:10;
 }
 
-/* --- MONTANT CENTRÉ --- */
+/* JOYEUX NOËL – CENTRÉ AU-DESSUS DU MONTANT */
+#noel-message{
+  text-align:center;
+  font-size:7vw;
+  font-weight:700;
+  margin-top:1.5vh;
+  margin-bottom:1vh;
+  text-shadow:0 0 18px rgba(255,255,255,0.9);
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity 0.9s ease, transform 0.9s ease;
+  z-index:10;
+  pointer-events:none;
+}
+
+/* Bloc montant centré */
 .amount-center{
   flex:1;
   display:flex;
@@ -85,7 +97,6 @@ body{
   position:relative;
   z-index:10;
 }
-
 .amount-wrapper{
   position:relative;
   display:flex;
@@ -95,7 +106,7 @@ body{
   min-width:40vw;
 }
 
-/* Montant doré + BLING */
+/* Montant doré */
 .amount-real{
   font-size:12vw;
   font-weight:700;
@@ -106,18 +117,18 @@ body{
   text-shadow:0 2px 6px rgba(0,0,0,0.25);
   position:relative;
   z-index:3;
-  opacity:0; /* apparaît après grattage */
+  opacity:0;          /* révélé après grattage */
   transform:scale(0.6);
 }
 
-/* Animation BLING */
+/* BLING montant */
 @keyframes bling {
   0% {transform:scale(0.6); filter:brightness(0.5);}
   40% {transform:scale(1.25); filter:brightness(1.6);}
   100% {transform:scale(1);}
 }
 
-/* Étincelles dorées */
+/* Étincelles */
 .sparkle {
   position:absolute;
   width:20px;height:20px;
@@ -127,7 +138,6 @@ body{
   animation:orbit 3s linear infinite, sparkleFade 3s ease-in-out infinite;
   pointer-events:none;
 }
-
 .sparkle:nth-child(1){animation-delay:0s;}
 .sparkle:nth-child(2){animation-delay:.7s;}
 .sparkle:nth-child(3){animation-delay:1.3s;}
@@ -137,7 +147,6 @@ body{
   0%,100% {opacity:0;}
   50% {opacity:1;}
 }
-
 @keyframes orbit {
   0% {transform:rotate(0deg) translateX(40px) rotate(0deg);}
   100% {transform:rotate(360deg) translateX(40px) rotate(-360deg);}
@@ -152,42 +161,20 @@ body{
   z-index:6;
 }
 
-/* Infos */
+/* Infos en bas */
 .bottom-info{text-align:center;margin-bottom:3vh;}
-
 .number{
   font-size:5vw;letter-spacing:1vw;margin-bottom:2vh;
 }
-
 .bottom-line{
   display:flex;justify-content:center;gap:12vw;
   font-size:4vw;
 }
-
 .label{
   font-size:3vw;text-transform:uppercase;opacity:.6;
 }
-
 .value{
   font-size:4.5vw;margin-top:1vw;
-}
-
-/* Joyeux Noël message */
-#noel-message {
-  position:fixed;
-  inset:0;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:rgba(0,0,0,0.7);
-  color:#fff;
-  font-size:10vw;
-  font-weight:700;
-  text-shadow:0 0 20px #fff;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 1.2s ease;
-  z-index:9999;
 }
 
 /* Animations globales */
@@ -196,30 +183,29 @@ body{
   50%{transform:scale(1.02) translateY(-1vh);}
   100%{transform:scale(1) translateY(0);}
 }
-
 @keyframes shine{
   0%{transform:translate(0,0);opacity:0.08;}
   50%{transform:translate(-4vw,3vw);opacity:0.15;}
   100%{transform:translate(0,0);opacity:0.08;}
 }
-
 @keyframes sweep{
   0%{transform:translateX(-80%);opacity:0;}
   40%{opacity:.7;}
   100%{transform:translateX(80%);opacity:0;}
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- Transition depuis le GIF -->
 <div id="loader-fade"></div>
 
 <div class="card">
 
   <div class="brand">ZARA</div>
+
+  <!-- Joyeux Noël propre, centré -->
+  <div id="noel-message">🎄 Joyeux Noël 🎁</div>
 
   <div class="amount-center">
     <div class="amount-wrapper" id="scratchZone">
@@ -253,27 +239,6 @@ body{
 
 </div>
 
-<!-- JOYEUX NOËL -->
-<div id="noel-message">🎄 Joyeux Noël 🎁</div>
-
-<style>
-#noel-message {
-  position: absolute;
-  top: 20%;              /* 👉 décalé au-dessus du montant */
-  left: 50%;
-  transform: translateX(-50%) scale(0.7);
-  color: #fff;
-  font-size: 9vw;
-  font-weight: 700;
-  text-shadow: 0 0 20px rgba(255,255,255,0.8);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s ease, transform 0.8s ease;
-  z-index: 999;
-}
-</style>
-
-
 <script>
 /* --- EFFET GRATTER --- */
 const canvas = document.getElementById("scratchCanvas");
@@ -290,7 +255,6 @@ resizeCanvas();
 window.addEventListener("resize", resizeCanvas);
 
 let scratching = false;
-
 canvas.addEventListener("mousedown", () => scratching = true);
 canvas.addEventListener("mouseup", () => scratching = false);
 canvas.addEventListener("mouseleave", () => scratching = false);
@@ -299,7 +263,6 @@ canvas.addEventListener("touchend", () => scratching = false);
 
 function scratch(e) {
   if (!scratching) return;
-
   let rect = canvas.getBoundingClientRect();
   let x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
   let y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
@@ -313,47 +276,41 @@ function scratch(e) {
 canvas.addEventListener("mousemove", scratch);
 canvas.addEventListener("touchmove", scratch);
 
-/* Auto dévoilement */
+/* Auto-dévoilement */
 function checkReveal() {
   let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
   let cleared = 0;
-
   for (let i = 3; i < pixels.length; i += 4) {
     if (pixels[i] === 0) cleared++;
   }
-
   let ratio = cleared / (pixels.length / 4);
 
   if (ratio > 0.6) {
     revealAmount();
     return;
   }
-
   requestAnimationFrame(checkReveal);
 }
 checkReveal();
 
-/* Apparition BLING du montant + Joyeux Noël */
+/* BLING montant + Joyeux Noël aligné */
 function revealAmount() {
   const amount = document.getElementById("amountReal");
-  const noel = document.getElementById("noel-message");
+  const noel   = document.getElementById("noel-message");
 
   canvas.style.opacity = "0";
   setTimeout(() => canvas.remove(), 350);
 
-  // BLING montant
   amount.style.opacity = "1";
   amount.style.animation = "bling 0.9s ease forwards";
 
-  // Étincelles visibles
   const sparkles = document.querySelectorAll(".sparkle");
   sparkles.forEach(s => s.style.opacity = "1");
 
-  // Joyeux Noël après un petit délai
   setTimeout(() => {
     noel.style.opacity = "1";
-    noel.style.transform = "translateX(-50%) scale(1)";
-  }, 1200);
+    noel.style.transform = "translateY(0)";
+  }, 900);
 }
 </script>
 
