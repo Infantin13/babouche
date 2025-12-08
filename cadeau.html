@@ -30,8 +30,12 @@ body{
 
 /* CARTE FULLSCREEN */
 .card{
-  width:100vw;height:100vh;
-  padding:4vh 6vw;
+.card{
+  width:100vw;
+  height:100vh;
+  padding:2vh 4vw;       /* padding réduit */
+  box-sizing:border-box; /* garantit que rien ne dépasse */
+  overflow:hidden;       /* empêche tout scroll furtif */
   background:radial-gradient(circle at top left,#333 0%,#050505 35%,#000 80%);
   color:#fff;
   display:flex;
